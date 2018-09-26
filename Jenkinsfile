@@ -3,20 +3,20 @@ pipeline {
 
     stages {
 
-        stage('Identify Services'){
+        stage('Docker build'){
             steps{
                 script{
-                    sh export SERVICE_FOLDERS=$(git --diff)
+                    docker.build('jenkins/demo')
                 }
             }
         }
 
-        stage('Trigger Build'){
+        stage('Docker push'){
             steps{
                 script{
-                    sh foreach childservice in SERVICE_FOLDERS
-                        build childservice
-                    end foreach
+                    docker.withRegistry('https://003656774475.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:karthik-aws') {
+                        docker.image('jenkins/demo').push("$currentBuild.number")
+                    }
                 }
             }
         }
