@@ -18,9 +18,12 @@ spec:
     spec:
       containers:
         - name: app
-          image: 720766170633.dkr.ecr.us-east-2.amazonaws.com/service1.app:latest
-          image: 720766170633.dkr.ecr.us-east-2.amazonaws.com/service2.app:latest
+          image: arn:aws:ecr:us-east-1:531185373103:repository/my-first-ecr-repo/service1.app:latest
           ports:
             - containerPort: 80
               protocol: TCP
           imagePullPolicy: Always
+
+
+---
+
