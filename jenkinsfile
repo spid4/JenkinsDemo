@@ -16,8 +16,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                service1 = docker.build("service1.app")
-                service2= docker.build("service2.app")
+                	sh 'docker build -t service1.app . '
                 }
             }
         }
