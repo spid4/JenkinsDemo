@@ -27,10 +27,11 @@ pipeline {
         stage('Push') {
             steps {
                 script{
-                        sh 'aws configure'
-                        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 531185373103.dkr.ecr.us-east-1.amazonaws.com'
-                        sh 'docker tag service1.app:latest 531185373103.dkr.ecr.us-east-1.amazonaws.com/my-first-ecr-repo:service1.app'
-                        sh 'docker push 531185373103.dkr.ecr.us-east-1.amazonaws.com/my-first-ecr-repo:service1.app'
+                        withAWS(credentials: 'aws-credentials', region: 'us-east-1'){
+                            sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 531185373103.dkr.ecr.us-east-1.amazonaws.com'
+                            sh 'docker tag service1.app:latest 531185373103.dkr.ecr.us-east-1.amazonaws.com/my-first-ecr-repo:service1.app'
+                            sh 'docker push 531185373103.dkr.ecr.us-east-1.amazonaws.com/my-first-ecr-repo:service1.app'
+                        }
                     }
                 }
         }
